@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "congestion-tax-calculator-net-core", "..\Backend Technical Test\netcore\congestion-tax-calculator-net-core.csproj", "{C6C790B9-72EA-4C1C-BFEC-7BBBFE3F4CBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "congestion-tax-calculator-net-core", "netcore\congestion-tax-calculator-net-core.csproj", "{4553CD2F-BF05-4801-B571-7A50183A363C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMe", "..\Backend Technical Test\TestMe\TestMe.csproj", "{E835B509-9FA0-42BF-9F56-014B26FF5D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestMe", "TestMe\TestMe.csproj", "{6491C2E8-4B93-4967-B91B-C6001ED51F7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6C790B9-72EA-4C1C-BFEC-7BBBFE3F4CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6C790B9-72EA-4C1C-BFEC-7BBBFE3F4CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6C790B9-72EA-4C1C-BFEC-7BBBFE3F4CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C790B9-72EA-4C1C-BFEC-7BBBFE3F4CBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E835B509-9FA0-42BF-9F56-014B26FF5D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E835B509-9FA0-42BF-9F56-014B26FF5D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E835B509-9FA0-42BF-9F56-014B26FF5D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E835B509-9FA0-42BF-9F56-014B26FF5D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4553CD2F-BF05-4801-B571-7A50183A363C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4553CD2F-BF05-4801-B571-7A50183A363C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4553CD2F-BF05-4801-B571-7A50183A363C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4553CD2F-BF05-4801-B571-7A50183A363C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6491C2E8-4B93-4967-B91B-C6001ED51F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6491C2E8-4B93-4967-B91B-C6001ED51F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6491C2E8-4B93-4967-B91B-C6001ED51F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6491C2E8-4B93-4967-B91B-C6001ED51F7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
