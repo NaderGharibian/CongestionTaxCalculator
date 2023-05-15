@@ -7,6 +7,7 @@ using Interfaces;
 using System;
 using System.Threading.Tasks;
 using congestion.calculator.Services;
+using congestion.calculator.Interfaces;
 
 namespace congestion.calculator.UseCases
 {
@@ -18,6 +19,11 @@ namespace congestion.calculator.UseCases
          * @param dates   - date and time of all passes on one day
          * @return - the total congestion tax for that day
          */
+        private readonly IConfiguration _configuration;
+        public GetTaxUseCase(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public async Task<bool> Handle(GetTaxRequestDtoUseCase request, IResponseUseCase<GetTaxResponseDtoUseCase> response)
         {
@@ -30,7 +36,7 @@ namespace congestion.calculator.UseCases
             var tax = new TaxService(request);
 
 
-            if(!tax.CheckFreeVehicle())
+            if (!tax.CheckFreeVehicle())
             {
 
                 DateTime intervalStart = request.Dates[0];
@@ -61,14 +67,14 @@ namespace congestion.calculator.UseCases
             }
 
 
-           
+
 
 
             response.Handle(new GetTaxResponseDtoUseCase(totalFee, StatusCode.Successed, new(EnumHelper<Success>.GetDisplayValue(Success.SUCCESSFULLY_COMPLETED))));
         }
         private bool IsTollFreeVehicle(Vehicle vehicle)
         {
-           
+
             String vehicleType = vehicle.GetVehicleType();
             return vehicleType.Equals(TollFreeVehicles.Motorcycle.ToString()) ||
                    vehicleType.Equals(TollFreeVehicles.Tractor.ToString()) ||
