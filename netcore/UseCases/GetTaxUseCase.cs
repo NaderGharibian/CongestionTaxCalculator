@@ -32,6 +32,7 @@ namespace congestion.calculator.UseCases
 
             if(!tax.CheckFreeVehicle())
             {
+
                 DateTime intervalStart = request.Dates[0];
                 int tempFee = GetTollFee(intervalStart, request.Vehicle);
 

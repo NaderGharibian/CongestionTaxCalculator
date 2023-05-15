@@ -13,14 +13,26 @@ namespace congestion.calculator
         public Configuration() { }
 
         private List<TollFeeContent> _tollFeeContents { get; set; }
+        private List<DateTimeContent> _dateTimeContents { get; set; }
 
         public void SetTollFee(List<TollFeeContent> tollFeeContents)
         {
-            tollFeeContents.AddRange(this._tollFeeContents);
+            _tollFeeContents.AddRange(tollFeeContents);
         }
         public List<TollFeeContent> GetTollFee()
         {
             return _tollFeeContents;
         }
+
+        public void SetCalendar(List<DateTimeContent> dateTimeContents)
+        {
+            _dateTimeContents.AddRange(dateTimeContents);
+        }
+        public List<DateTimeContent> GetCalendar()
+        {
+            return _dateTimeContents;
+        }
+
+
     }
 }
