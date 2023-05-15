@@ -1,4 +1,5 @@
-﻿using congestion.calculator.Interfaces;
+﻿using congestion.calculator.Dto;
+using congestion.calculator.Interfaces;
 using Dto.UseCases.Requests;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,16 @@ namespace congestion.calculator.Services
         private DateTime _intervalStart { get; }
         private bool _freeTax { get; }
         private readonly IConfiguration _configuration;
-        public TaxService(GetTaxRequestDtoUseCase request,IConfiguration configuration) {
+        public TaxService(IConfiguration configuration) {
             _intervalStart = request.Dates[0];
             _freeTax = request.Vehicle.FreeTax();
             _configuration = configuration;
         }
+        public void init()
+        {
+            GetTaxRequestDtoUseCase request,
+        }
+        
 
 
         public bool CheckFreeVehicle()
@@ -37,11 +43,14 @@ namespace congestion.calculator.Services
         }
         public virtual int GetTollFee(DateTime date)
         {
-            if (!_freeTax)
+            var IsFreeTollFee = CheckCalendarToFreeTollFee(date);
+
+            if (!_freeTax && !IsFreeTollFee)
             {
                 var currentTime = TimeOnly.FromDateTime(date);
                 return _configuration.GetTollFee().Where(i=> i.Start <= currentTime && i.End >= currentTime).FirstOrDefault()?.Fee??0;
             }
+
             return 0;
         }
     }
