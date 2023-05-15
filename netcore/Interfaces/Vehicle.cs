@@ -8,6 +8,8 @@ namespace congestion.calculator
 {
     public interface Vehicle
     {
+        bool FreeTax();
         String GetVehicleType();
+
     }
 }

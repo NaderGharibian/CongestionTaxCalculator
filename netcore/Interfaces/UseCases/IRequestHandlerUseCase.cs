@@ -1,8 +1,8 @@
-﻿using Core.Dto.Contents;
+﻿using Dto.Contents;
 
 using System.Threading.Tasks;
 
-namespace Core.Interfaces;
+namespace Interfaces;
 
 public interface IRequestHandlerUseCase<in TRequestUseCase, out TResponseUseCase>
     where TRequestUseCase : IRequestUseCase<ResponseContentResult>

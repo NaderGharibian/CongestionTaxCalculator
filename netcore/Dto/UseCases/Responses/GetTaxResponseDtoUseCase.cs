@@ -1,7 +1,8 @@
-﻿using Core.Dto.Contents;
-using Core.Dto.Enums;
+﻿using congestion.calculator;
+using Dto.Contents;
+using Dto.Enums;
 
-namespace Core.Dto.UseCases.Responses;
+namespace Dto.UseCases.Responses;
 
 public class GetTaxResponseDtoUseCase : ResponseContentResult
 {
@@ -9,6 +10,6 @@ public class GetTaxResponseDtoUseCase : ResponseContentResult
     public GetTaxResponseDtoUseCase(StatusCode result, ResponseMessage message ) : base(result, message) { }
     public GetTaxResponseDtoUseCase(int tax, StatusCode result, ResponseMessage message ) : base(result, message)
     {
-        Customer = customer;
+        Tax = tax;
     }
 }

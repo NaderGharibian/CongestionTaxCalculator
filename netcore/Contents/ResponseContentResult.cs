@@ -1,8 +1,7 @@
 ﻿using congestion.calculator;
+using Dto.Enums;
 
-using Enums;
-
-namespace Core.Dto.Contents;
+namespace Dto.Contents;
 
 public abstract class ResponseContentResult
 {

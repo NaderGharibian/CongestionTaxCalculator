@@ -1,12 +1,12 @@
 ﻿using congestion.calculator;
-
-using Core.Interfaces;
+using Dto.UseCases.Responses;
 
 using System;
+using Interfaces;
 
-namespace Core.Dto.UseCases.Requests;
+namespace Dto.UseCases.Requests;
 
-public class GetTaxRequestDtoUseCase : IRequestUseCase<int>
+public class GetTaxRequestDtoUseCase : IRequestUseCase<GetTaxResponseDtoUseCase>
 {
     public Vehicle Vehicle { get; }
     public DateTime[] Dates { get; }

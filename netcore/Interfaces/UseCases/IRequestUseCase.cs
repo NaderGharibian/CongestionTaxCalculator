@@ -1,6 +1,6 @@
-﻿using Core.Dto.Contents;
+﻿using Dto.Contents;
 
-namespace Core.Interfaces;
+namespace Interfaces;
 
 public interface IRequestUseCase<out TResponseUseCase> where TResponseUseCase : ResponseContentResult
 {

@@ -8,6 +8,10 @@ namespace congestion.calculator
 {
     public class Motorbike : Vehicle
     {
+        public bool FreeTax()
+        {
+            return false;
+        }
         public String GetVehicleType()
         {
             return "Motorbike";
