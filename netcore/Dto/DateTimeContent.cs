@@ -8,12 +8,12 @@ namespace congestion.calculator.Dto
 {
     public class DateTimeContent
     {
-        public DateTime _DateTime { get; }
-        public bool IsFreeTollFee { get; set; }
-        public DateTimeContent(DateTime _dateTime, bool isFreeTollFee)
+        public DateOnly _Date { get; }
+        public bool IsHoliday { get; set; }
+        public DateTimeContent(DateOnly _date, bool isHoliday)
         {
-            _DateTime = _dateTime;
-            IsFreeTollFee = isFreeTollFee;
+            _Date = _date;
+            IsHoliday = isHoliday;
         }
 
     }

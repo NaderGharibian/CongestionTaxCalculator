@@ -1,6 +1,8 @@
 ﻿using congestion.calculator.Dto;
 using congestion.calculator.Interfaces;
+
 using Dto.UseCases.Requests;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,9 @@ namespace congestion.calculator.Services
         private DateTime[] _dates { get; }
         private bool _freeTax { get; }
         private readonly IConfiguration _configuration;
-        public TaxAbstract(GetTaxRequestDtoUseCase request,IConfiguration configuration) {
-            _dates = request.Dates;
+        public TaxAbstract(GetTaxRequestDtoUseCase request, IConfiguration configuration)
+        {
+            _dates = request.Dates.OrderBy(_ => _.Date).ToArray();
             _freeTax = request.Vehicle.FreeTax();
             _configuration = configuration;
         }
@@ -25,25 +28,33 @@ namespace congestion.calculator.Services
         {
             return _freeTax;
         }
-        public virtual bool CheckCalendarToFreeTollFee(DateTime date)
+        public virtual bool CheckCalendarToFreeTollFee(DateOnly date)
         {
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) return true;
-          
-            return _configuration.GetCalendar().Where(i => i._DateTime == date ).FirstOrDefault()?.IsFreeTollFee ?? false;
+
+            return _configuration.GetHoliday().Where(i => i == date).Count() > 0 ? true : false;
 
         }
         public DateTime GetFirstDate()
         {
             return _dates[0];
         }
+        public List<DateOnly> GetGroupDate()
+        {
+            return _dates.GroupBy(_ => _.Date).Select(_ => DateOnly.FromDateTime(_.Key)).OrderBy(_ => _).ToList();
+        }
+        public List<DateTime> GetDates(DateOnly date)
+        {
+            return _dates.Where(_ => DateOnly.FromDateTime(_.Date) == date).OrderBy(_ => _).ToList();
+        }
         public virtual int GetTollFee(DateTime date)
         {
-            var IsFreeTollFee = CheckCalendarToFreeTollFee(date);
+            var IsFreeTollFee = CheckCalendarToFreeTollFee(DateOnly.FromDateTime(date));
 
             if (!_freeTax && !IsFreeTollFee)
             {
                 var currentTime = TimeOnly.FromDateTime(date);
-                return _configuration.GetTollFee().Where(i=> i.Start <= currentTime && i.End >= currentTime).FirstOrDefault()?.Fee??0;
+                return _configuration.GetTollFee().Where(i => i.Start <= currentTime && i.End >= currentTime).FirstOrDefault()?.Fee ?? 0;
             }
 
             return 0;
@@ -51,35 +62,66 @@ namespace congestion.calculator.Services
         public virtual int Calculate()
         {
             if (CheckFreeVehicle())
+                return 0;
+
+            int totalFee = 0;
+            foreach (var date in GetGroupDate())
             {
-                int totalFee = 0;
-                DateTime intervalStart = GetFirstDate();
-                int tempFee = GetTollFee(intervalStart); 
-           
 
-                foreach (DateTime date in _dates)
+
+                var getList = GetDates(date);
+                DateTime from = getList[0];
+                List<int> listFee = new();
+                int tempFee = 0;
+
+
+
+
+
+
+                foreach (var datetime in getList)
                 {
-                    int nextFee = GetTollFee(date);
 
+                    TimeSpan diffInMillies = datetime - from;
+                    var minutes = diffInMillies.TotalMinutes;
+                    int fee = GetTollFee(datetime);
 
-                    long diffInMillies = date.Millisecond - intervalStart.Millisecond;
-                    long minutes = diffInMillies / 1000 / 60;
-
-                    if (minutes <= 60)
+                    if (minutes >= 60)
                     {
-                        if (totalFee > 0) totalFee -= tempFee;
-                        if (nextFee >= tempFee) tempFee = nextFee;
-                        totalFee += tempFee;
+                        if (listFee.Count > 0)
+                        {
+                            tempFee += listFee[listFee.Count - 1];
+                            listFee = new();
+                        }
+                        from = datetime;
+
                     }
-                    else
-                    {
-                        totalFee += nextFee;
-                    }
+                    listFee.Add(fee);
                 }
-                if (totalFee > 60) totalFee = 60;
-                return totalFee;
+
+                if (listFee.Count > 0)
+                {
+                    tempFee += listFee.Sum(_ => _);
+                }
+
+                if (tempFee > 0)
+                    totalFee += (tempFee > 60) ? 60 : tempFee;
+
+
+
             }
-            return 0;
+            //foreach (DateTime date in _dates)
+            //{
+            //    int nextFee = GetTollFee(date);
+
+
+
+
+
+            //}
+            //if (totalFee > 60) totalFee = 60;
+            return totalFee;
+
         }
     }
 }
